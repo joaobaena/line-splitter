@@ -26,3 +26,8 @@ operating system because he wanted to<br>
 use the functions of his new PC with an<br>
 80386 processor. Development was done on<br>
 MINIX using the GNU C Compiler.<br>
+
+
+## Considerations:
+
+As function should receive any text, it's processed as a Stream to avoid blowing up memory over large strings
