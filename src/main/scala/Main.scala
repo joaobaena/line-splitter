@@ -3,8 +3,7 @@ import fs2._
 
 object Main extends IOApp.Simple {
   private val EMPTY_STRING = ""
-  private val CHAR_LIMIT = 40
-
+  private val CHAR_LIMIT   = 40
 
   def run: IO[Unit] = {
     val sampleText =
