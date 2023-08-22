@@ -8,7 +8,7 @@ object Main extends IOApp.Simple {
 
   def run: IO[Unit] = {
     val sampleText =
-      "In 1991, while studying computer science at University of Helsinki, Linus Torvalds began a project that later became the Linux kernel. He wrote the program specifically for the hardware he was using and independent of an operating system because he wanted to use the functions of his new PC with an 80386 processor. Development was done on MINIX using the GNU C Compiler."
+      "averyverylargeWordWithMoreThan41Characters"
 
     val input: Stream[IO, Char] = Stream.emits(sampleText.toCharArray)
 
@@ -39,7 +39,7 @@ object Main extends IOApp.Simple {
             if (currentLineSize > 0) Pull.output1(currentLine) >> Pull.output1(nextWord) >> go(stream, EMPTY_STRING)
             else Pull.output1(nextWord) >> go(stream, EMPTY_STRING)
           else if (currentLineSize + nextWordSize >= charLimit)
-            Pull.output1(currentLine) >> go(stream, EMPTY_STRING)
+            Pull.output1(currentLine) >> go(stream, nextWord)
           else go(stream, if (currentLineSize > 0) s"$currentLine $nextWord" else nextWord)
         case None                     =>
           Pull.done
