@@ -15,12 +15,37 @@ class LineSplitterSpec extends CatsEffectSuite {
     assertEquals(result, List.empty)
   }
 
-  test("lineSplitter handles a large word") {
-    val input: Stream[IO, Char] = Stream.emits("also processes averyverylargeWordWithMoreThan40Characters".toCharArray)
+  test("lineSplitter handles a large words on the sm") {
+    val aLongWord = "averyverylargeWordWithMoreThan40Characters1"
+    val input: Stream[IO, Char] = Stream.emits(s"also processes $aLongWord".toCharArray)
 
     val result: List[String] =
       Main.lineSplitter(input, CHAR_LIMIT).compile.toList.unsafeRunSync()
 
-    assertEquals(result, List("also processes", "averyverylargeWordWithMoreThan40Characters"))
+    assertEquals(result, List("also processes", aLongWord))
+  }
+
+  test("lineSplitter works on the proposed string") {
+    val sampleText =
+      "In 1991, while studying computer science at University of Helsinki, Linus Torvalds began a project that later became the Linux kernel. He wrote the program specifically for the hardware he was using and independent of an operating system because he wanted to use the functions of his new PC with an 80386 processor. Development was done on MINIX using the GNU C Compiler."
+
+    val input: Stream[IO, Char] = Stream.emits(sampleText.toCharArray)
+
+    val result: List[String] =
+      Main.lineSplitter(input, CHAR_LIMIT).compile.toList.unsafeRunSync()
+
+    val expected = List(
+      "In 1991, while studying computer science",
+      "at University of Helsinki, Linus",
+      "Torvalds began a project that later",
+      "became the Linux kernel. He wrote the",
+      "program specifically for the hardware he",
+      "was using and independent of an",
+      "operating system because he wanted to",
+      "use the functions of his new PC with an",
+      "80386 processor. Development was done on",
+      "MINIX using the GNU C Compiler."
+    )
+    assertEquals(result, expected)
   }
 }

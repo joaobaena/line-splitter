@@ -37,14 +37,16 @@ object Main extends IOApp.Simple {
           val nextWordExceedsCharLimit         = nextWordSize > charLimit
           val linePlusNextWordExceedsCharLimit = currentLineSize + nextWordSize >= charLimit
           (nextWordExceedsCharLimit, linePlusNextWordExceedsCharLimit, currentLine.isEmpty) match {
-            case (true, _, false)      => Pull.output1(currentLine) >> Pull.output1(nextWord) >> go(stream, EMPTY_STRING)
+            case (true, _, false)      =>
+              Pull.output1(currentLine) >> Pull.output1(nextWord) >> go(stream, EMPTY_STRING)
             case (true, _, true)       => Pull.output1(nextWord) >> go(stream, EMPTY_STRING)
             case (false, true, _)      => Pull.output1(currentLine) >> go(stream, nextWord)
             case (false, false, true)  => go(stream, nextWord)
             case (false, false, false) => go(stream, s"$currentLine $nextWord")
           }
         case None                     =>
-          Pull.output1(currentLine) >> Pull.done
+          if (currentLine.isEmpty) Pull.done
+          else Pull.output1(currentLine) >> Pull.done
       }
     in => go(in, EMPTY_STRING).stream
   }
