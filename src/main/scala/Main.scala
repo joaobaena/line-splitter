@@ -44,7 +44,7 @@ object Main extends IOApp.Simple {
             case (false, false, false) => go(stream, s"$currentLine $nextWord")
           }
         case None                     =>
-          Pull.done
+          Pull.output1(currentLine) >> Pull.done
       }
     in => go(in, EMPTY_STRING).stream
   }
