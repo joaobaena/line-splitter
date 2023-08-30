@@ -30,5 +30,5 @@ MINIX using the GNU C Compiler.<br>
 
 ## Considerations:
 
-- As the function should receive any text, it should processed as a Stream to avoid blowing up memory over large strings
+- As the function should receive any text, it should be processed as a Stream to avoid blowing up memory over large strings
 - If a single word exceeds the character limit it will be output as such as no words can be broken
