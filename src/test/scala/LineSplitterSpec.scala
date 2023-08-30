@@ -15,7 +15,7 @@ class LineSplitterSpec extends CatsEffectSuite {
     assertEquals(result, List.empty)
   }
 
-  test("lineSplitter handles a large words on the sm") {
+  test("lineSplitter handles large words") {
     val aLongWord = "averyverylargeWordWithMoreThan40Characters1"
     val input: Stream[IO, Char] = Stream.emits(s"also processes $aLongWord".toCharArray)
 
